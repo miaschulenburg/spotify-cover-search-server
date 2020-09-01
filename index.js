@@ -9,8 +9,8 @@ const CLIENT_ID = process.env.CLIENT_ID || null;
 const CLIENT_SECRET = process.env.CLIENT_SECRET || null;
 
 app.get('/:album', (req, res) => {
-    if (!CLIENT_ID) res.error(403).send('No client ID available.');
-    if (!CLIENT_SECRET) res.error(403).send('No client secret available.');
+    if (!CLIENT_ID) res.status(403).send('No client ID available.');
+    if (!CLIENT_SECRET) res.status(403).send('No client secret available.');
 
     axios({
         url: 'https://accounts.spotify.com/api/token',
@@ -39,7 +39,7 @@ app.get('/:album', (req, res) => {
     }).then(function(response) {
         res.send(response.data);
     }).catch(function(error) {
-        res.error(400).send(error);
+        res.status(400).send(error);
     });
 });
 
