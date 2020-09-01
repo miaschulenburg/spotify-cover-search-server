@@ -8,6 +8,17 @@ const PORT = process.env.PORT || 4444;
 const CLIENT_ID = process.env.CLIENT_ID || null;
 const CLIENT_SECRET = process.env.CLIENT_SECRET || null;
 
+app.all('*', function(req,res,next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, OPTIONS");
+    next();
+});
+
+app.get('/', (req, res) => {
+    res.status(400).send("Please provide a search term.");
+});
+
 app.get('/:album', (req, res) => {
     if (!CLIENT_ID) res.status(403).send('No client ID available.');
     if (!CLIENT_SECRET) res.status(403).send('No client secret available.');
